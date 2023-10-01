@@ -1,0 +1,103 @@
+Create proc tenDuAnMuc1(
+@MaDA char(10)
+)
+as
+begin	
+	DECLARE @ten_du_an NVARCHAR(100)
+	IF EXISTS (select TenDuAn from DuAn where MaDA = @maDA)
+		BEGIN
+	SELECT @ten_du_an= TenDuAn FROM DuAn where MaDA = @maDA	
+	PRINT 'Tên dự án có mã ' + @ma_du_an + ' là: ' + @ten_du_an
+	RETURN
+		END
+	ELSE
+	PRINT 'Không có dự án này'
+end
+
+Create proc tenDuAnMuc2(
+@MaDA char(10)
+)
+as
+begin	
+	DECLARE @ten_du_an NVARCHAR(100)
+	IF EXISTS (select TenDuAn from DA1 where MaDA = @maDA)
+		select  @ten_du_an= TenDuAn from DA1 where MaDA = @maDA
+	ELSE IF EXISTS (select TenDuAn from DA2 where MaDA = @maDA)
+		select @ten_du_an= TenDuan from DA2 where MaDA = @maDA
+	ELSE	
+		BEGIN
+			PRINT 'Không có dự án này'
+			RETURN
+		END
+	PRINT 'Tên dự án có mã ' + @ma_du_an + ' là: ' + @ten_du_an
+
+end
+
+
+Create proc maNhanVienMuc1(
+@MaDA char(10)
+)
+as
+begin	
+	
+	IF EXISTS (select MaNV from HOSO where MaDA = @maDA)	
+		SELECT MaNV FROM HOSO where MaDA = @maDA	
+	
+	ELSE
+	PRINT 'Không có nhân viên nào
+end
+
+Create proc maNhanVienMuc2(
+@MaDA char(10)
+)
+as
+begin	
+
+	IF EXISTS (select MaNV from HS1 where MaDA = @maDA)
+		select MaNV from HS1 where MaDA = @maDA
+	ELSE IF EXISTS (select MaNV from HS2 where MaDA = @maDA)
+		select MaNV from HS2 where MaDA = @maDA
+	ELSE	
+		BEGIN
+			PRINT 'Không có nhân viên hoặc dự án'
+			RETURN
+		END
+ 
+end
+
+
+Create proc tenNhanVienMuc1(
+@MaDA char(10)
+)
+as
+begin	
+	
+	IF EXISTS (select MaNV from HOSO where MaDA = @maDA)	
+		SELECT TenNV FROM HOSO,NV where MaDA = @maDA and HOSO.MaNV = NV.MaNV	
+	
+	ELSE
+	PRINT 'Không có nhân viên nào
+end
+
+Create proc maNhanVienMuc2(
+@MaDA char(10)
+)
+as
+begin	
+
+	IF EXISTS (select MaNV from HS1 where MaDA = @maDA)
+		select TenNV from HS1,NV where MaDA = @maDA HS1.MaNV=NV.MaNV
+	ELSE IF EXISTS (select MaNV from HS2 where MaDA = @maDA)
+		select TenNV from HS2,NV where MaDA = @maDA and HS2.MaNV=NV.MaNV
+	ELSE	
+		BEGIN
+			PRINT 'Không có nhân viên hoặc dự án'
+			RETURN
+		END
+ 
+end
+
+
+
+
+
